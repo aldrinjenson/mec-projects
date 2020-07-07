@@ -1,0 +1,9 @@
+.buttons{
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.addnew{
+   margin-top: 20px;
+   margin-bottom: 70px;
+}
