@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import "./App.css";
 import HomePage from "./pages/HomePage";
@@ -8,8 +8,16 @@ import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import AddNewProject from "./pages/AddNewProject/AddNewProject";
+import firebaseConfig from "./fbConfig";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
 const App = () => {
+  useEffect(() => {
+    firebase.initializeApp(firebaseConfig);
+  }, []);
+
   return (
     <div className="App">
       <Navbar />

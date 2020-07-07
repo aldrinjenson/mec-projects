@@ -7,7 +7,7 @@ const FiltersTab = () => {
     <div className="filtersTab container">
       <SearchBar placeholder="Search by keywords" />
       <p>Add the following Filters to narrow down your searches:</p>
-      <Filters />
+      <Filters /> 
     </div>
   );
 };
