@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./AddNewProject.styles.css";
-import firebase from "firebase/app";
 import { useForm } from "react-hook-form";
-import { storage } from "firebase";
+import { storage } from "../../fbConfig";
 
 const AddNewProject = () => {
   const { register, handleSubmit, errors } = useForm();
@@ -11,29 +10,37 @@ const AddNewProject = () => {
     isPresent: false,
   });
 
-  const handleGoogleVerify = (e) => {
-    e.preventDefault();
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user; // The signed-in user info.
-        setUploader({
-          name: user.displayName,
-          email: user.email,
-        });
-      })
-      .catch((error) => {
-        const { errorCode, errorMessage, email } = error;
-        console.log("Error found:", errorCode, email);
-        setErrorData({ isPresent: true, errorCode, errorMessage, email });
-      });
-  };
+  const [pdfAsFile, setPdfAsFile] = useState("");
+  const [pdfAsUrl, setPdfAsUrl] = useState({ pdfUrl: "" });
 
   const onSubmit = (data) => {
+    const uploadTask = storage
+      .ref(`/projectPdfs/${pdfAsFile.name}`)
+      .put(pdfAsFile);
+
+    uploadTask.on(
+      "state_changed",
+      snapShot => console.log(snapShot),
+      err => console.log(err),
+      () => {
+        // gets the functions from storage refences the image storage in firebase by the children
+        // gets the download url then sets the image from firebase as the value for the pdfUrl key:
+        storage
+          .ref("projectPdfs")
+          .child(pdfAsFile.name)
+          .getDownloadURL()
+          .then((fireBaseUrl) => {
+            setPdfAsUrl((prevObject) => ({
+              ...prevObject,
+              pdfUrl: fireBaseUrl,
+            }));
+          });
+      }
+    );
+
     const date = new Date();
     data.submittedDate = date.toLocaleDateString("en-US");
+    data.pdfUrl = pdfAsUrl.pdfUrl;
     console.log(data);
     // firebase
     //   .auth()
@@ -45,14 +52,33 @@ const AddNewProject = () => {
   };
 
   const handlePdfUpload = (e) => {
-    var storage = firebase.storage();
+    // var storageRef = storage.ref();
+    // var mountainsRef = storageRef.child("mountains.jpg");
 
-    var storageRef = storage.ref();
-    var mountainsRef = storageRef.child("mountains.jpg");
+    // var mountainImagesRef = storageRef.child("images/mountains.jpg");
 
-    var mountainImagesRef = storageRef.child("images/mountains.jpg");
+    const image = e.target.files[0];
+    setPdfAsFile((imageFile) => image);
+  };
 
-    console.log(e);
+  const handleGoogleVerify = (e) => {
+    e.preventDefault();
+    // const provider = new firebase.auth.GoogleAuthProvider();
+    // firebase
+    //   .auth()
+    //   .signInWithPopup(provider)
+    //   .then((result) => {
+    //     const user = result.user; // The signed-in user info.
+    //     setUploader({
+    //       name: user.displayName,
+    //       email: user.email,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     const { errorCode, errorMessage, email } = error;
+    //     console.log("Error found:", errorCode, email);
+    //     setErrorData({ isPresent: true, errorCode, errorMessage, email });
+    //   });
   };
 
   return (
@@ -77,6 +103,7 @@ const AddNewProject = () => {
             name="file"
             onChange={handlePdfUpload}
             encType="multipart/form-data"
+            // required
           />
 
           <div className="row">
@@ -96,7 +123,7 @@ const AddNewProject = () => {
                 type="text"
                 placeholder="CSA"
                 ref={register}
-                required
+                // required
               />
               <label htmlFor="className">Class name/Batch</label>
             </div>
@@ -108,7 +135,7 @@ const AddNewProject = () => {
               <input
                 name="members[0].name"
                 type="text"
-                required
+                // required
                 placeholder="John Doe"
                 ref={register}
               />

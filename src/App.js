@@ -8,10 +8,7 @@ import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import AddNewProject from "./pages/AddNewProject/AddNewProject";
-// import firebaseConfig from "./fbConfig";
-// import firebase from "firebase/app";
-// import "firebase/auth";
-// import "firebase/firestore";
+// import { firebase } from "./fbConfig";
 
 const App = () => {
   return (
