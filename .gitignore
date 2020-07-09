@@ -6,10 +6,8 @@
 .pnp.js
 
 fbConfig.js
-
 # testing
 /coverage
-
 
 # production
 /build
