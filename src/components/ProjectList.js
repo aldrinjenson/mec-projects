@@ -1,8 +1,7 @@
 import React from "react";
 import ProjectCard from "./ProjectCard";
-import projects from "./data";
 
-const ProjectList = () => {
+const ProjectList = ({ projects }) => {
   return (
     <div
       className="projectList"

@@ -1,13 +1,12 @@
 import React from "react";
 import "./ProjectPage.styles.css";
 import { useParams } from "react-router-dom";
-import projects from "../../components/data";
+import { useSelector } from "react-redux";
 
 const ProjectPage = () => {
   const { id } = useParams();
-  const { title, abstract, memebers, batch, year, tags, pdfFile } = projects[
-    id
-  ];
+  const project = useSelector((state) => state.projects)[id];
+  const { title, abstract, memebers, batch, year, tags, pdfFile } = project;
 
   return (
     <div className="projectpage container">

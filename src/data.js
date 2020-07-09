@@ -8,7 +8,7 @@ const projects = [
     batch: "CSA",
     year: 2020,
     tags: ["NLP", "Query", "Language Processing", "Interface"],
-    pdfFile: require("../sampleProjects/Natural Language to Query Interface.pdf"),
+    pdfFile: require("./sampleProjects/Natural Language to Query Interface.pdf"),
   },
   {
     id: 1,
@@ -19,7 +19,7 @@ const projects = [
     batch: "CSB",
     year: 2020,
     tags: ["NLP", "Query", "Language Processing", "Interface"],
-    pdfFile: require("../sampleProjects/Natural Language to Query Interface.pdf"),
+    pdfFile: require("./sampleProjects/Natural Language to Query Interface.pdf"),
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const projects = [
     batch: "CSA",
     year: 2020,
     tags: ["NLP", "Query", "Language Processing", "Interface"],
-    pdfFile: require("../sampleProjects/Natural Language to Query Interface.pdf"),
+    pdfFile: require("./sampleProjects/Natural Language to Query Interface.pdf"),
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const projects = [
     batch: "CSA",
     year: 2020,
     tags: ["NLP", "Query", "Language Processing", "Interface"],
-    pdfFile: require("../sampleProjects/Natural Language to Query Interface.pdf"),
+    pdfFile: require("./sampleProjects/Natural Language to Query Interface.pdf"),
   },
 ];
 
