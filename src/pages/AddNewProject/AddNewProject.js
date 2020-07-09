@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "./AddNewProject.styles.css";
-import * as firebase from "firebase/app";
+import firebase from "firebase/app";
+import { useForm } from "react-hook-form";
+import { storage } from "firebase";
 
 const AddNewProject = () => {
+  const { register, handleSubmit, errors } = useForm();
   const [uploader, setUploader] = useState({});
   const [errorData, setErrorData] = useState({
     isPresent: false,
@@ -15,45 +18,53 @@ const AddNewProject = () => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        // const token = result.credential.accessToken;
         const user = result.user; // The signed-in user info.
         setUploader({
           name: user.displayName,
-          email: user.email
+          email: user.email,
         });
       })
       .catch((error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // The email of the user's account used.
-        // const email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        // const credential = error.credential;
         const { errorCode, errorMessage, email } = error;
         console.log("Error found:", errorCode, email);
         setErrorData({ isPresent: true, errorCode, errorMessage, email });
-        // ...
       });
   };
 
-  console.log(uploader);
+  const onSubmit = (data) => {
+    const date = new Date();
+    data.submittedDate = date.toLocaleDateString("en-US");
+    console.log(data);
+    // firebase
+    //   .auth()
+    //   .signOut()
+    //   .then(() => console.log("signout successfull"))
+    //   .catch((error) =>
+    //     console.log("An error happened while signing out " + error)
+    //   );
+  };
+
   const handlePdfUpload = (e) => {
-    // const file = e.target.files[0];
-    // let formData = new FormData();
-    // formData.append("file", file);
-    // console.log(formData)
+    var storage = firebase.storage();
+
+    var storageRef = storage.ref();
+    var mountainsRef = storageRef.child("mountains.jpg");
+
+    var mountainImagesRef = storageRef.child("images/mountains.jpg");
+
     console.log(e);
   };
 
   return (
     <div className="addnew container">
       <div className="row">
-        <form className="col s12 ">
+        <form className="col s12 " onSubmit={handleSubmit(onSubmit)}>
           <div className="row">
             <div className="input-field col s12 ">
               <input
                 // placeholder="eg: Natural Language Processing To Query Interface "
-                id="title"
+                ref={register({ required: true, minLength: 4 })}
+                name="projectTitle"
                 type="text"
               />
               <label htmlFor="title">Project Title</label>
@@ -65,22 +76,29 @@ const AddNewProject = () => {
             accept=".pdf"
             name="file"
             onChange={handlePdfUpload}
-            enctype="multipart/form-data"
+            encType="multipart/form-data"
           />
 
           <div className="row">
             <div className="input-field col s12 ">
               <textarea
-                id="abstract"
+                name="abstract"
                 className="materialize-textarea"
+                ref={register}
               ></textarea>
               <label htmlFor="abstract">Enter an abstract/description</label>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12 ">
-              <input id="className" type="text" placeholder="CSA" />
-              <label htmlFor="className">className/Batch</label>
+              <input
+                name="className"
+                type="text"
+                placeholder="CSA"
+                ref={register}
+                required
+              />
+              <label htmlFor="className">Class name/Batch</label>
             </div>
           </div>
 
@@ -88,63 +106,87 @@ const AddNewProject = () => {
           <div className="row">
             <div className="input-field col s8 ">
               <input
-                id="name1"
+                name="members[0].name"
                 type="text"
-                className="validate"
+                required
                 placeholder="John Doe"
+                ref={register}
               />
             </div>
             <div className="input-field col s4 ">
-              <input id="id1" type="number" className="validate" />
+              <input
+                name="members[0].id"
+                type="number"
+                className="validate"
+                ref={register}
+              />
+              <label htmlFor="members[0].id">KTU ID</label>
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s8 ">
+              <input
+                name="members[1].name"
+                type="text"
+                className="validate"
+                placeholder="John Doe"
+                ref={register}
+              />
+            </div>
+            <div className="input-field col s4 ">
+              <input
+                name="members[1].id"
+                type="number"
+                className="validate"
+                ref={register}
+              />
+              <label htmlFor="members[1].id">KTU ID</label>
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s8 ">
+              <input
+                name="members[2].name"
+                type="text"
+                className="validate"
+                placeholder="John Doe"
+                ref={register}
+              />
+            </div>
+            <div className="input-field col s4 ">
+              <input
+                name="members[2].id"
+                type="number"
+                className="validate"
+                ref={register}
+              />
               <label htmlFor="id1">KTU ID</label>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s8 ">
               <input
-                id="name1"
+                name="members[3].name"
                 type="text"
                 className="validate"
                 placeholder="John Doe"
+                ref={register}
               />
             </div>
             <div className="input-field col s4 ">
-              <input id="id1" type="number" className="validate" />
-              <label htmlFor="id1">KTU ID</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s8 ">
               <input
-                id="name1"
-                type="text"
+                name="members[2].id"
+                type="number"
                 className="validate"
-                placeholder="John Doe"
+                ref={register}
               />
-            </div>
-            <div className="input-field col s4 ">
-              <input id="id1" type="number" className="validate" />
-              <label htmlFor="id1">KTU ID</label>
-            </div>
-          </div>
-          <div className="row">
-            <div className="input-field col s8 ">
-              <input
-                id="name1"
-                type="text"
-                className="validate"
-                placeholder="John Doe"
-              />
-            </div>
-            <div className="input-field col s4 ">
-              <input id="id1" type="number" className="validate" />
               <label htmlFor="id1">KTU ID</label>
             </div>
           </div>
 
           <div className="row">
             <div className="input-field col s6">
-              <select>
+              <select ref={register} name="completedYear">
                 <option value="2020" defaultValue>
                   2020
                 </option>
@@ -156,13 +198,17 @@ const AddNewProject = () => {
             <div className="col s6">
               <p>
                 <label>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    name="isFinalYearProject"
+                    ref={register}
+                  />
                   <span>Is this a final year project?</span>
                 </label>
               </p>
               <p>
                 <label>
-                  <input type="checkbox" />
+                  <input type="checkbox" name="isCompleted" ref={register} />
                   <span>Is the project fully completed?</span>
                 </label>
               </p>
@@ -174,12 +220,12 @@ const AddNewProject = () => {
               className="btn green lighten-1"
             >
               Verify Identity
-              <i class="fa fa-google" aria-hidden="true" />
+              <i className="fa fa-google" aria-hidden="true" />
             </button>
             <button
-              disabled={!uploader.name}
-              type="submit"
+              // disabled={!uploader.name}
               className="btn blue"
+              type="submit"
             >
               Submit Project
             </button>
@@ -194,12 +240,12 @@ const AddNewProject = () => {
         <p className="green-text">Identity Verified: {uploader.name} </p>
       )}
 
-      {errorData.isPresent ? (
+      {errorData.isPresent && (
         <div className="errorPresent">
           <p>There seems to be some errors with your credentials</p>
           <p>{errorData.errorMessage}</p>
         </div>
-      ) : null}
+      )}
 
       <h5 className="bold">Disclaimer:</h5>
       <p>

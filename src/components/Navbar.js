@@ -26,9 +26,6 @@ const Navbar = () => {
               </NavLink>
               <ul className="right hide-on-med-and-down">
                 <li>
-                  <NavLink to="sass.html">Edit</NavLink>
-                </li>
-                <li>
                   <NavLink to="/new">Add New Project</NavLink>
                 </li>
                 <li>
@@ -40,9 +37,6 @@ const Navbar = () => {
         </nav>
       </div>
       <ul className="sidenav" id="mobile-demo">
-        <li>
-          <NavLink to="sass.html">Edit</NavLink>
-        </li>
         <li>
           <NavLink to="/new">Add New Project</NavLink>
         </li>

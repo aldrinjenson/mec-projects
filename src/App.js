@@ -8,16 +8,12 @@ import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import AddNewProject from "./pages/AddNewProject/AddNewProject";
-import firebaseConfig from "./fbConfig";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+// import firebaseConfig from "./fbConfig";
+// import firebase from "firebase/app";
+// import "firebase/auth";
+// import "firebase/firestore";
 
 const App = () => {
-  useEffect(() => {
-    firebase.initializeApp(firebaseConfig);
-  }, []);
-
   return (
     <div className="App">
       <Navbar />
