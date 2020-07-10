@@ -3,8 +3,13 @@ import "./AddNewProject.styles.css";
 import { useForm } from "react-hook-form";
 import { storage } from "../../fbConfig";
 import firebase from "firebase";
+import { useDispatch } from "react-redux";
 
 const AddNewProject = () => {
+
+
+  const dispatch = useDispatch()
+
   const { register, handleSubmit, errors } = useForm();
   const [uploader, setUploader] = useState({});
   const [errorData, setErrorData] = useState({
@@ -14,10 +19,13 @@ const AddNewProject = () => {
   const [pdfAsFile, setPdfAsFile] = useState("");
 
   const onSubmit = (data) => {
+    // dispatch(addProject(data))
+    console.log(data)
+
     const uploadTask = storage
       .ref(`/projectPdfs/${pdfAsFile.name}`)
       .put(pdfAsFile);
-
+    
     uploadTask.on(
       "state_changed",
       (snapShot) => console.log(snapShot),
@@ -34,19 +42,20 @@ const AddNewProject = () => {
               ...data,
               submittedDate: new Date().toLocaleDateString("en-US"),
               pdfUrl: fireBaseUrl,
-              uploader
+              uploader,
             });
           });
       }
     );
 
-    // firebase
-    //   .auth()
-    //   .signOut()
-    //   .then(() => console.log("signout successfull"))
-    //   .catch((error) =>
-    //     console.log("An error happened while signing out " + error)
-    //   );
+
+    firebase
+      .auth()
+      .signOut()
+      .then(() => console.log("signout successfull"))
+      .catch((error) =>
+        console.log("An error happened while signing out " + error)
+      );
   };
 
   const handlePdfUpload = (e) => {
@@ -56,22 +65,22 @@ const AddNewProject = () => {
 
   const handleGoogleVerify = (e) => {
     e.preventDefault();
-    // const provider = new firebase.auth.GoogleAuthProvider();
-    // firebase
-    //   .auth()
-    //   .signInWithPopup(provider)
-    //   .then((result) => {
-    //     const user = result.user; // The signed-in user info.
-    //     setUploader({
-    //       name: user.displayName,
-    //       email: user.email,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     const { errorCode, errorMessage, email } = error;
-    //     console.log("Error found:", errorCode, email);
-    //     setErrorData({ isPresent: true, errorCode, errorMessage, email });
-    //   });
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        const user = result.user; // The signed-in user info.
+        setUploader({
+          name: user.displayName,
+          email: user.email,
+        });
+      })
+      .catch((error) => {
+        const { errorCode, errorMessage, email } = error;
+        console.log("Error found:", errorCode, email);
+        setErrorData({ isPresent: true, errorCode, errorMessage, email });
+      });
   };
 
   return (
@@ -136,8 +145,7 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[0].id"
-                type="number"
-                className="validate"
+                type="number" 
                 ref={register}
               />
               <label htmlFor="members[0].id">KTU ID</label>
@@ -147,8 +155,7 @@ const AddNewProject = () => {
             <div className="input-field col s8 ">
               <input
                 name="members[1].name"
-                type="text"
-                className="validate"
+                type="text" 
                 placeholder="John Doe"
                 ref={register}
               />
@@ -156,8 +163,7 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[1].id"
-                type="number"
-                className="validate"
+                type="number" 
                 ref={register}
               />
               <label htmlFor="members[1].id">KTU ID</label>
@@ -167,8 +173,7 @@ const AddNewProject = () => {
             <div className="input-field col s8 ">
               <input
                 name="members[2].name"
-                type="text"
-                className="validate"
+                type="text" 
                 placeholder="John Doe"
                 ref={register}
               />
@@ -176,8 +181,7 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[2].id"
-                type="number"
-                className="validate"
+                type="number" 
                 ref={register}
               />
               <label htmlFor="id1">KTU ID</label>
@@ -187,8 +191,7 @@ const AddNewProject = () => {
             <div className="input-field col s8 ">
               <input
                 name="members[3].name"
-                type="text"
-                className="validate"
+                type="text" 
                 placeholder="John Doe"
                 ref={register}
               />
@@ -196,8 +199,7 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[2].id"
-                type="number"
-                className="validate"
+                type="number" 
                 ref={register}
               />
               <label htmlFor="id1">KTU ID</label>
@@ -234,6 +236,16 @@ const AddNewProject = () => {
               </p>
             </div>
           </div>
+          <div className="chips">
+            <p>Add Some tags for easy finding of your project</p>
+            <input
+              name="tags"
+              className="custom-class"
+              placeholder="Type in a tag and press Enter"
+              ref={register}
+              // onChange={e=>console.log(e.target.value)}
+            />
+          </div>
           <div className="buttons">
             <button
               onClick={handleGoogleVerify}
@@ -243,7 +255,7 @@ const AddNewProject = () => {
               <i className="fa fa-google" aria-hidden="true" />
             </button>
             <button
-              // disabled={!uploader.name}
+              disabled={!uploader.name}
               className="btn blue"
               type="submit"
             >

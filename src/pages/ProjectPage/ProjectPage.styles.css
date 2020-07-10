@@ -10,7 +10,8 @@
 }
 
 .tags,
-.class {
+.class,
+.year {
   display: flex;
   align-items: center;
 }
@@ -19,7 +20,9 @@
 .batchyear {
   margin-right: 5px;
   position: relative;
-  top: 3px;
+  top: 4px;
+  font-size: 1.2rem;
+  font-weight: normal;
 }
 
 

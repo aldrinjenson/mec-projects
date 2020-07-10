@@ -10,7 +10,7 @@ const ProjectCard = ({project}) => {
         <Link to={"/project" + project.id} project={project} >
         {/* <Link to={"/project" + p.id}> */}
         <span className="card-title green-text text-darken-4 ">
-          {project.title}
+          {project.projectTitle}
         </span>
         </Link>
         <p>
