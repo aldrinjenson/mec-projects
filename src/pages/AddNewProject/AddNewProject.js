@@ -7,8 +7,7 @@ import { useDispatch } from "react-redux";
 
 const AddNewProject = () => {
 
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, errors } = useForm();
   const [uploader, setUploader] = useState({});
@@ -20,12 +19,12 @@ const AddNewProject = () => {
 
   const onSubmit = (data) => {
     // dispatch(addProject(data))
-    console.log(data)
+    console.log(data);
 
     const uploadTask = storage
       .ref(`/projectPdfs/${pdfAsFile.name}`)
       .put(pdfAsFile);
-    
+
     uploadTask.on(
       "state_changed",
       (snapShot) => console.log(snapShot),
@@ -47,7 +46,6 @@ const AddNewProject = () => {
           });
       }
     );
-
 
     firebase
       .auth()
@@ -94,6 +92,7 @@ const AddNewProject = () => {
                 ref={register({ required: true, minLength: 4 })}
                 name="projectTitle"
                 type="text"
+                placeholder="eg: Squirrel Proof Arduino BirdCage"
               />
               <label htmlFor="title">Project Title</label>
             </div>
@@ -113,6 +112,7 @@ const AddNewProject = () => {
               <textarea
                 name="abstract"
                 className="materialize-textarea"
+                placeholder='The most advanced birdcage you are ever gonna find!! Bye Bye Squirrels..'
                 ref={register}
               ></textarea>
               <label htmlFor="abstract">Enter an abstract/description</label>
@@ -145,7 +145,8 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[0].id"
-                type="number" 
+                type="text"
+                placeholder="eg:MDLXXCSXXX"
                 ref={register}
               />
               <label htmlFor="members[0].id">KTU ID</label>
@@ -155,7 +156,7 @@ const AddNewProject = () => {
             <div className="input-field col s8 ">
               <input
                 name="members[1].name"
-                type="text" 
+                type="text"
                 placeholder="John Doe"
                 ref={register}
               />
@@ -163,7 +164,8 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[1].id"
-                type="number" 
+                type="text"
+                placeholder="eg:MDLXXCSXXX"
                 ref={register}
               />
               <label htmlFor="members[1].id">KTU ID</label>
@@ -173,7 +175,7 @@ const AddNewProject = () => {
             <div className="input-field col s8 ">
               <input
                 name="members[2].name"
-                type="text" 
+                type="text"
                 placeholder="John Doe"
                 ref={register}
               />
@@ -181,7 +183,8 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[2].id"
-                type="number" 
+                type="text"
+                placeholder="eg:MDLXXCSXXX"
                 ref={register}
               />
               <label htmlFor="id1">KTU ID</label>
@@ -191,7 +194,7 @@ const AddNewProject = () => {
             <div className="input-field col s8 ">
               <input
                 name="members[3].name"
-                type="text" 
+                type="text"
                 placeholder="John Doe"
                 ref={register}
               />
@@ -199,7 +202,8 @@ const AddNewProject = () => {
             <div className="input-field col s4 ">
               <input
                 name="members[2].id"
-                type="number" 
+                type="text"
+                placeholder="eg:MDLXXCSXXX"
                 ref={register}
               />
               <label htmlFor="id1">KTU ID</label>

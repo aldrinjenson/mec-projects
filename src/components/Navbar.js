@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
-import M from "materialize-css";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
 
   return (
     <div className="Navbar">
