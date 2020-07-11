@@ -11,8 +11,6 @@ import AddNewProject from "./pages/AddNewProject/AddNewProject";
 import { useDispatch } from "react-redux";
 import { fetchProjects } from "./redux/actions/ProjectActions";
 
-
-
 const App = () => {
   const dispatch = useDispatch();
   useEffect(()=>{

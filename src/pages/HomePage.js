@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Landing from "../components/Landing/Landing";
 import FiltersTab from "../components/FiltersTab";
 import ProjectList from "../components/ProjectList";
@@ -7,15 +7,69 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
   const projects = useSelector((state) => state.projects.projects);
 
-  const filteredList = projects
+  const [constraints, setConstraints] = useState({
+    completedYear: "",
+    onlyFinalYear: false,
+    className: "",
+    searchQuery: "",
+  });
+
+  const applyConstraints = (projects, constraints) => {
+    const searchFilter = (project, searchQuery) => {
+      if (searchQuery === "") return true;
+      return project.projectTitle
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+    };
+
+    const completedYearFilter = (project, year) => {
+      if (year === "") return true;
+      return project.completedYear === constraints.completedYear;
+    };
+    
+    const classFilter = (project, className) => {
+      if (className === "") return true;
+      return project.className === className;
+    };
+
+    const finalYearFilter = (project, isOnlyFinalYear) => {
+      if (!isOnlyFinalYear) return true;
+      return project.isFinalYearProject === true;
+    };
+
+    const constrainedProjects = projects.filter((project) => {
+      return (
+        completedYearFilter(project, constraints.completedYear) &&
+        classFilter(project, constraints.className) &&
+        finalYearFilter(project, constraints.onlyFinalYear) &&
+        searchFilter(project, constraints.searchQuery)
+      );
+    });
+    return constrainedProjects;
+  };
+  const filteredProjects =
+    projects.length > 1 ? applyConstraints(projects, constraints) : [];
+
   return (
     <div className="HomePage">
       <Landing />
-      <FiltersTab  projects={projects} />
-      {filteredList.length ? (
-        <ProjectList projects={filteredList} />
+      <FiltersTab
+        projects={projects}
+        constraints={constraints}
+        setConstraints={setConstraints}
+      />
+      {projects.length ? (
+        filteredProjects.length > 1 ? (
+          <ProjectList projects={filteredProjects} />
+        ) : (
+          <div className="center">
+            <p>No such project exists based on the applied conditions</p>
+          </div>
+        )
       ) : (
-        <div className="center-align">Loading...</div>
+        <div className="center">
+          <p>Loading...</p>
+        </div>
       )}
     </div>
   );

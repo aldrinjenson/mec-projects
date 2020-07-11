@@ -236,7 +236,7 @@ const AddNewProject = () => {
               </p>
             </div>
           </div>
-          <div className="chips">
+          {/* <div className="chips">
             <p>Add Some tags for easy finding of your project</p>
             <input
               name="tags"
@@ -245,7 +245,7 @@ const AddNewProject = () => {
               ref={register}
               // onChange={e=>console.log(e.target.value)}
             />
-          </div>
+          </div> */}
           <div className="buttons">
             <button
               onClick={handleGoogleVerify}
