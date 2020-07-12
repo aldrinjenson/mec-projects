@@ -24,3 +24,7 @@ body {
   overflow: hidden;
   padding-left: 80px;
 } 
+
+.marginBottom{
+  margin-bottom: 50px;
+}

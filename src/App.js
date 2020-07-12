@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import "materialize-css/dist/css/materialize.min.css";
-import M from 'materialize-css'
-import "./App.css";
 import HomePage from "./pages/HomePage";
+import M from 'materialize-css'
 import { Switch, Route } from "react-router-dom";
 import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import Navbar from "./components/Navbar";
@@ -15,10 +14,9 @@ import { fetchProjects } from "./redux/actions/ProjectActions";
 const App = () => {
   const dispatch = useDispatch();
   useEffect(()=>{
-    M.AutoInit()
     dispatch(fetchProjects())
+    M.AutoInit()
   })
-  // dispatch(fetchProjects)
 
   return (
     <div className="App">

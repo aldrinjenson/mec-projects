@@ -26,7 +26,7 @@ const HomePage = () => {
       if (year === "") return true;
       return project.completedYear === constraints.completedYear;
     };
-    
+
     const classFilter = (project, className) => {
       if (className === "") return true;
       return project.className === className;
@@ -47,27 +47,26 @@ const HomePage = () => {
     });
     return constrainedProjects;
   };
+
   const filteredProjects =
     projects.length > 1 ? applyConstraints(projects, constraints) : [];
 
   return (
     <div className="HomePage">
       <Landing />
-      <FiltersTab
-        projects={projects}
-        constraints={constraints}
-        setConstraints={setConstraints}
-      />
+      <FiltersTab constraints={constraints} setConstraints={setConstraints} />
       {projects.length ? (
         filteredProjects.length > 1 ? (
           <ProjectList projects={filteredProjects} />
         ) : (
-          <div className="center">
-            <p>No such project exists based on the applied conditions</p>
+          <div className="center marginBottom ">
+            <p className="center-align">
+              No such project exists based on the applied conditions
+            </p>
           </div>
         )
       ) : (
-        <div className="center">
+        <div className="center marginBottom">
           <p>Loading...</p>
         </div>
       )}

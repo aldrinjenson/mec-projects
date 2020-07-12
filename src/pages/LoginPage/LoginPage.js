@@ -12,8 +12,8 @@ const LoginPage = () => {
       </div>
       <div className="row">
         <div className="input-field col s12 m6">
-          <input type="text" name="ktuid" />
-          <label htmlFor="ktuid">Your Name </label>
+          <input type="text" name="userName" />
+          <label htmlFor="userName">Your Name </label>
         </div>
       </div>
       <div className="row">
