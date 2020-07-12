@@ -1,43 +1,30 @@
 import React, { useState } from "react";
 import "./AddNewProject.styles.css";
 import { useForm } from "react-hook-form";
-// import { storage } from "../../fbConfig";
-import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadProject } from "../../redux/actions/ProjectActions";
-import { authenticateWithGoogle } from "../../redux/actions/authActions";
+import {
+  authenticateWithGoogle,
+  signOutUser,
+} from "../../redux/actions/authActions";
 
 const AddNewProject = () => {
-  const auth = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-
   const { register, handleSubmit } = useForm();
   const [pdfAsFile, setPdfAsFile] = useState("");
-
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const { uploader, error } = auth;
-  if (error) console.log("error in authentication", error.errorCode);
 
   const onSubmit = (data) => {
     data.uploader = uploader;
     dispatch(uploadProject(data, pdfAsFile));
-
-    firebase
-      .auth()
-      .signOut()
-      .then(() => console.log("signout successfull"))
-      .catch((err) =>
-        console.log("An error happened while signing out " + err)
-      );
+    dispatch(signOutUser());
   };
 
   const handlePdfUpload = (e) => {
     const pdf = e.target.files[0];
     setPdfAsFile(() => pdf);
   };
-
-  // const handleTags = e =>{
-  //   console.log(e.target.data)
-  // }
 
   const handleGoogleVerify = (e) => {
     e.preventDefault();
@@ -51,9 +38,10 @@ const AddNewProject = () => {
           <div className="row">
             <div className="input-field col s12 ">
               <input
-                ref={register({ required: true, minLength: 4 })}
+                ref={register}
                 name="projectTitle"
                 type="text"
+                min={4}
                 placeholder="eg: Squirrel Proof Arduino BirdCage"
               />
               <label htmlFor="title">Project Title</label>

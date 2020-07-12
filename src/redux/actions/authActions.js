@@ -19,14 +19,29 @@ export const authenticateWithGoogle = () => {
           name: user.displayName,
           email: user.email,
         };
-        console.log('identity verified')
         dispatch(verifyIdentitySuccess(uploader));
       })
       .catch((error) => {
+        console.log("error in authentication", error.message);
         dispatch(verifyIdentityError(error));
-        // const { errorCode, errorMessage, email } = error;
-        // console.log("Error found:", errorCode, email);
-        // setErrorData({ isPresent: true, errorCode, errorMessage, email });
+      });
+  };
+};
+
+export const signOutUser = () => {
+  return (dispatch) => {
+    dispatch(signOutUserBegin());
+    // Async action
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(signOutUserSuccess());
+        console.log("Signed out user");
+      })
+      .catch((err) => {
+        console.log("error in signing out user");
+        dispatch(signOutUserError(err));
       });
   };
 };
@@ -44,6 +59,24 @@ export const verifyIdentitySuccess = (uploader) => {
   };
 };
 export const verifyIdentityError = (error) => {
+  return {
+    type: AUTH_VERIFY_ERROR,
+    payload: error,
+  };
+};
+
+export const signOutUserBegin = () => {
+  return {
+    type: AUTH_VERIFY_BEGIN,
+  };
+};
+
+export const signOutUserSuccess = () => {
+  return {
+    type: AUTH_VERIFY_SUCCESS,
+  };
+};
+export const signOutUserError = (error) => {
   return {
     type: AUTH_VERIFY_ERROR,
     payload: error,
