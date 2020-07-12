@@ -11,3 +11,9 @@
 i{
    margin-left: 10px;
 }
+
+.google-verify-btn{
+   padding: 5px;
+   margin: 5px;
+   z-index: 2;
+}

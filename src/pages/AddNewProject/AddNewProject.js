@@ -1,58 +1,32 @@
 import React, { useState } from "react";
 import "./AddNewProject.styles.css";
 import { useForm } from "react-hook-form";
-import { storage } from "../../fbConfig";
+// import { storage } from "../../fbConfig";
 import firebase from "firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uploadProject } from "../../redux/actions/ProjectActions";
+import { authenticateWithGoogle } from "../../redux/actions/authActions";
 
 const AddNewProject = () => {
-
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, errors } = useForm();
-  const [uploader, setUploader] = useState({});
-  const [errorData, setErrorData] = useState({
-    isPresent: false,
-  });
-
+  const { register, handleSubmit } = useForm();
   const [pdfAsFile, setPdfAsFile] = useState("");
 
+  const { uploader, error } = auth;
+  if (error) console.log("error in authentication", error.errorCode);
+
   const onSubmit = (data) => {
-    // dispatch(addProject(data))
-    console.log(data);
-
-    const uploadTask = storage
-      .ref(`/projectPdfs/${pdfAsFile.name}`)
-      .put(pdfAsFile);
-
-    uploadTask.on(
-      "state_changed",
-      (snapShot) => console.log(snapShot),
-      (err) => console.log(err),
-      () => {
-        storage
-          .ref("projectPdfs")
-          .child(pdfAsFile.name)
-          .getDownloadURL()
-          .then((fireBaseUrl) => {
-            // adding to firebase
-            const db = firebase.firestore();
-            db.collection("projects").add({
-              ...data,
-              submittedDate: new Date().toLocaleDateString("en-US"),
-              pdfUrl: fireBaseUrl,
-              uploader,
-            });
-          });
-      }
-    );
+    data.uploader = uploader;
+    dispatch(uploadProject(data, pdfAsFile));
 
     firebase
       .auth()
       .signOut()
       .then(() => console.log("signout successfull"))
-      .catch((error) =>
-        console.log("An error happened while signing out " + error)
+      .catch((err) =>
+        console.log("An error happened while signing out " + err)
       );
   };
 
@@ -61,24 +35,13 @@ const AddNewProject = () => {
     setPdfAsFile(() => pdf);
   };
 
+  // const handleTags = e =>{
+  //   console.log(e.target.data)
+  // }
+
   const handleGoogleVerify = (e) => {
     e.preventDefault();
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        const user = result.user; // The signed-in user info.
-        setUploader({
-          name: user.displayName,
-          email: user.email,
-        });
-      })
-      .catch((error) => {
-        const { errorCode, errorMessage, email } = error;
-        console.log("Error found:", errorCode, email);
-        setErrorData({ isPresent: true, errorCode, errorMessage, email });
-      });
+    dispatch(authenticateWithGoogle());
   };
 
   return (
@@ -88,7 +51,6 @@ const AddNewProject = () => {
           <div className="row">
             <div className="input-field col s12 ">
               <input
-                // placeholder="eg: Natural Language Processing To Query Interface "
                 ref={register({ required: true, minLength: 4 })}
                 name="projectTitle"
                 type="text"
@@ -112,7 +74,7 @@ const AddNewProject = () => {
               <textarea
                 name="abstract"
                 className="materialize-textarea"
-                placeholder='The most advanced birdcage you are ever gonna find!! Bye Bye Squirrels..'
+                placeholder="The coolest squirrel trao ever!!"
                 ref={register}
               ></textarea>
               <label htmlFor="abstract">Enter an abstract/description</label>
@@ -247,13 +209,13 @@ const AddNewProject = () => {
               className="custom-class"
               placeholder="Type in a tag and press Enter"
               ref={register}
-              // onChange={e=>console.log(e.target.value)}
+              onChange={handleTags}
             />
           </div> */}
           <div className="buttons">
             <button
               onClick={handleGoogleVerify}
-              className="btn green lighten-1"
+              className="google-verify-btn btn green lighten-1"
             >
               Verify Identity
               <i className="fa fa-google" aria-hidden="true" />
@@ -276,10 +238,10 @@ const AddNewProject = () => {
         <p className="green-text">Identity Verified: {uploader.name} </p>
       )}
 
-      {errorData.isPresent && (
+      {error && (
         <div className="errorPresent">
           <p>There seems to be some errors with your credentials</p>
-          <p>{errorData.errorMessage}</p>
+          <p>{error.errorMessage}</p>
         </div>
       )}
 

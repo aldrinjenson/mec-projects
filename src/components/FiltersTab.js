@@ -24,7 +24,8 @@ const FiltersTab = ({ constraints, setConstraints }) => {
           handleSearchQuery={handleSearchQuery}
         />
       </div>
-      <p>Add the following Filters to narrow down your searches:</p>
+      <p>Add the following Filters to narrow down your search:</p>
+      <br/>
       <div className="filters">
         <div className="row">
           <div className="input-field col s4">

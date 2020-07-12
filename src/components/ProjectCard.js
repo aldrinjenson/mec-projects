@@ -14,7 +14,7 @@ const ProjectCard = ({project}) => {
         </span>
         </Link>
         <p>
-          {project.abstract}
+          {project.abstract.substring(0,200)}..
         </p>
       </div>
     </div>

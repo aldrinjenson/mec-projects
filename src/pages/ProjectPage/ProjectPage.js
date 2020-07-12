@@ -2,19 +2,25 @@ import React from "react";
 import "./ProjectPage.styles.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import pdfobject from "pdfobject";
 
 const ProjectPage = () => {
   const { id } = useParams();
   const projects = useSelector((state) => state.projects);
   let project;
-  if (!projects.loading)
+  if (!projects.loading) {
     project = projects.projects.find((proj) => proj.id === id);
+  }
+  console.log(document.getElementById('pdf'))
   return (
     <div className="projectpage container">
       {project === undefined ? (
         <div>Loading..</div>
       ) : (
         <div>
+          {
+            pdfobject.embed(project.pdfUrl, '#pdf')
+          }
           <h3>{project.projectTitle}</h3>
           <div className="abstract">
             <h5 className="bold title">Abstract:</h5>
@@ -53,14 +59,8 @@ const ProjectPage = () => {
               </button>
             ))}
           </div> */}
-          <div className="pdf">
-            <object
-              width="100%"
-              height="900"
-              aria-label="Pdf file of the project"
-              data={project.pdfUrl}
-              type="application/pdf"
-            />
+          <div className="pdf-container">
+            <div id="pdf"></div>
           </div>
         </div>
       )}
