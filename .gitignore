@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 
-fbConfig.js
+# fbConfig.js
 *.pdf
 # testing
 /coverage
