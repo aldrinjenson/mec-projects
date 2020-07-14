@@ -2,8 +2,8 @@ import React from "react";
 import "./ProjectPage.styles.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import pdfobject from "pdfobject";
-import { Document, Page, pdfjs } from "react-pdf";
+// import pdfobject from "pdfobject";
+// import { Document, Page, pdfjs } from "react-pdf";
 
 const ProjectPage = () => {
   const { id } = useParams();
@@ -12,9 +12,9 @@ const ProjectPage = () => {
     ? projects.projects.find((proj) => proj.id === id)
     : null;
 
-  let pdfLink = project
-    ? "http://docs.google.com/gview?url=" + project.pdfUrl + "&embedded=true"
-    : "";
+  // let pdfLink = project
+  //   ? "http://docs.google.com/gview?url=" + project.pdfUrl + "&embedded=true"
+  //   : "";
 
   return (
     <div className="projectpage container">

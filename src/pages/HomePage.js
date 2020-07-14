@@ -24,7 +24,7 @@ const HomePage = () => {
 
     const completedYearFilter = (project, year) => {
       if (year === "") return true;
-      return project.completedYear == constraints.completedYear;
+      return project.completedYear === constraints.completedYear;
     };
 
     const classFilter = (project, className) => {
