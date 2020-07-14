@@ -5,7 +5,7 @@ import ProjectList from "../components/ProjectList";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
-  const projects = useSelector((state) => state.projects.projects);
+  const { projects, loading } = useSelector((state) => state.projects);
 
   const [constraints, setConstraints] = useState({
     completedYear: "",
@@ -24,7 +24,7 @@ const HomePage = () => {
 
     const completedYearFilter = (project, year) => {
       if (year === "") return true;
-      return project.completedYear === constraints.completedYear;
+      return project.completedYear == constraints.completedYear;
     };
 
     const classFilter = (project, className) => {
@@ -48,25 +48,23 @@ const HomePage = () => {
     return constrainedProjects;
   };
 
-  const filteredProjects =
-    projects.length > 1 ? applyConstraints(projects, constraints) : [];
-
+  const filteredProjects = !loading
+    ? applyConstraints(projects, constraints)
+    : [];
   return (
     <div className="HomePage">
       <Landing />
       <FiltersTab constraints={constraints} setConstraints={setConstraints} />
-      {projects.length ? (
-        filteredProjects.length > 1 ? (
+      {!loading ? (
+        filteredProjects.length ? (
           <ProjectList projects={filteredProjects} />
         ) : (
-          <div className="center marginBottom ">
-            <p className="center-align">
-              No such project exists based on the applied conditions
-            </p>
+          <div className="center loading">
+            <p>No such project exists based on the applied conditions</p>
           </div>
         )
       ) : (
-        <div className="center marginBottom">
+        <div className="center loading">
           <p>Loading...</p>
         </div>
       )}

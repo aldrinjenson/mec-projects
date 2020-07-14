@@ -25,6 +25,9 @@ body {
   padding-left: 80px;
 } 
 
-.marginBottom{
+.loading{
+  margin-top: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   margin-bottom: 50px;
 }

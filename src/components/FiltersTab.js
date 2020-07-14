@@ -1,12 +1,7 @@
 import React, { useEffect } from "react";
-import M from "materialize-css";
 import SearchBar from "./SearchBar/SearchBar";
 
 const FiltersTab = ({ constraints, setConstraints }) => {
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setConstraints({ ...constraints, [name]: value });

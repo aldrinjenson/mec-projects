@@ -26,9 +26,6 @@
 }
 
 
-.pdf{
-  margin-top: 20px;
-  min-height: 80vh;
-  margin-bottom: 30px;
-  height: 50vh;
+.pdf-container{
+  margin-bottom: 20px;
 }

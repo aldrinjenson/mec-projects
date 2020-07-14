@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddNewProject.styles.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadProject } from "../../redux/actions/ProjectActions";
+import M from "materialize-css";
 import {
   authenticateWithGoogle,
   signOutUser,
@@ -14,12 +15,17 @@ const AddNewProject = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { uploader, error } = auth;
+  console.log(uploader)
 
   const onSubmit = (data) => {
     data.uploader = uploader;
     dispatch(uploadProject(data, pdfAsFile));
     dispatch(signOutUser());
   };
+
+  useEffect(() => {
+    M.AutoInit()
+  }, [])
 
   const handlePdfUpload = (e) => {
     const pdf = e.target.files[0];
@@ -44,7 +50,7 @@ const AddNewProject = () => {
                 min={4}
                 placeholder="eg: Squirrel Proof Arduino BirdCage"
               />
-              <label htmlFor="title">Project Title</label>
+              <label htmlFor="title" className='browser-default' >Project Title</label>
             </div>
           </div>
 
@@ -62,10 +68,10 @@ const AddNewProject = () => {
               <textarea
                 name="abstract"
                 className="materialize-textarea"
-                placeholder="The coolest squirrel trao ever!!"
+                placeholder="The coolest squirrel trap ever!!"
                 ref={register}
               ></textarea>
-              <label htmlFor="abstract">Enter an abstract/description</label>
+              <label htmlFor="abstract" className='browser-default'>Enter an abstract/description</label>
             </div>
           </div>
           <div className="row">

@@ -5,7 +5,7 @@ const ProjectList = ({ projects }) => {
   return (
     <div
       className="projectList"
-      style={{ minHeight: "75vh", marginBottom: "50px" }}
+      style={{ minHeight: "75vh", marginBottom: "55px" }}
     >
       <div className="container">
         {projects.map((project) => (
