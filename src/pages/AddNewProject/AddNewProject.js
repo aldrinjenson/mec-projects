@@ -25,6 +25,7 @@ const AddNewProject = () => {
 
   useEffect(() => {
     M.AutoInit()
+    M.updateTextFields()
   }, [])
 
   const handlePdfUpload = (e) => {
