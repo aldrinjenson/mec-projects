@@ -6,14 +6,12 @@ import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const { projects, loading } = useSelector((state) => state.projects);
-
   const [constraints, setConstraints] = useState({
     completedYear: "",
     onlyFinalYear: false,
     className: "",
     searchQuery: "",
   });
-
   const applyConstraints = (projects, constraints) => {
     const searchFilter = (project, searchQuery) => {
       if (searchQuery === "") return true;

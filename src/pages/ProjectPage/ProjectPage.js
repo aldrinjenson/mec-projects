@@ -2,8 +2,6 @@ import React from "react";
 import "./ProjectPage.styles.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import pdfobject from "pdfobject";
-// import { Document, Page, pdfjs } from "react-pdf";
 
 const ProjectPage = () => {
   const { id } = useParams();
@@ -12,15 +10,10 @@ const ProjectPage = () => {
     ? projects.projects.find((proj) => proj.id === id)
     : null;
 
-  // let pdfLink = project
-  //   ? "http://docs.google.com/gview?url=" + project.pdfUrl + "&embedded=true"
-  //   : "";
-
   return (
     <div className="projectpage container">
       {project ? (
         <div>
-          {console.log(project.pdfUrl)}
           <h3>{project.projectTitle}</h3>
           <div className="abstract">
             <h5 className="bold title">Abstract:</h5>

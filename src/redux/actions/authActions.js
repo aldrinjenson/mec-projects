@@ -3,6 +3,8 @@ import {
   AUTH_VERIFY_SUCCESS,
   AUTH_VERIFY_ERROR,
   AUTH_VERIFY_BEGIN,
+  SIGNOUT_USER_SUCCESS,
+  SIGNOUT_USER_BEGIN,
 } from "../constants";
 
 export const authenticateWithGoogle = () => {
@@ -14,7 +16,7 @@ export const authenticateWithGoogle = () => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        const user = result.user; // The signed-in user info.
+        const user = result.user; // The signed-in user's info.
         const uploader = {
           name: user.displayName,
           email: user.email,
@@ -22,7 +24,7 @@ export const authenticateWithGoogle = () => {
         dispatch(verifyIdentitySuccess(uploader));
       })
       .catch((error) => {
-        console.log("error in authentication", error.message);
+        console.log("error in authentication", error);
         dispatch(verifyIdentityError(error));
       });
   };
@@ -67,13 +69,13 @@ export const verifyIdentityError = (error) => {
 
 export const signOutUserBegin = () => {
   return {
-    type: AUTH_VERIFY_BEGIN,
+    type: SIGNOUT_USER_BEGIN,
   };
 };
 
 export const signOutUserSuccess = () => {
   return {
-    type: AUTH_VERIFY_SUCCESS,
+    type: SIGNOUT_USER_SUCCESS,
   };
 };
 export const signOutUserError = (error) => {

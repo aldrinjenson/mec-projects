@@ -21,9 +21,7 @@ const AddNewProject = () => {
   const uploadComplete = useSelector((state) => state.projects.uploadComplete);
   const dispatch = useDispatch();
   const history = useHistory();
-  let { uploader, error } = auth;
-  if (!uploader) uploader = { name: "" };
-
+  let { uploader, error, isAuthenticated } = auth;
   const navigateHome = () => {
     dispatch(fetchProjects());
     history.push("/");
@@ -240,7 +238,7 @@ const AddNewProject = () => {
                   <i className="fa fa-google" aria-hidden="true" />
                 </button>
                 <button
-                  // disabled={!uploader.name}
+                  disabled={!isAuthenticated}
                   className="btn blue"
                   type="submit"
                 >
@@ -249,7 +247,7 @@ const AddNewProject = () => {
               </div>
             </form>
           </div>
-          {!uploader.name ? (
+          {!isAuthenticated ? (
             <p className="red-text ">
               You can submit once your identity is verified
             </p>
@@ -265,7 +263,7 @@ const AddNewProject = () => {
           <h5 className="bold">Disclaimer:</h5>
           <p>
             The admins of the site has the authority to remove submitted
-            projects if the contents are found to be manipulated or writted
+            projects if the contents are found to be manipulated or written
             using unlawful methods.
           </p>
           <h5 className="bold">NOTE:</h5>
@@ -274,7 +272,7 @@ const AddNewProject = () => {
             one one who submits the project into the database. This is done to
             ensure that the person can be contacted in case of any errors or
             mistakes in the information entered.
-          </p>{" "}
+          </p>
         </div>
       ) : uploadComplete ? (
         <div className="center">
