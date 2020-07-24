@@ -23,10 +23,10 @@ const ProjectPage = () => {
             <h5 className="bold title">Submitted By:</h5>
             <ul>
               {project.members.map((member, index) => (
-                <li key={index}>
+                <li key={index} className='member-details' >
                   <span>{member.name}</span>
                   <span>
-                    <strong>ID: {member.id} </strong>
+                    {member.id && <strong>ID: {member.id} </strong>}
                   </span>
                 </li>
               ))}

@@ -29,3 +29,9 @@
 .pdf-container{
   margin-bottom: 20px;
 }
+
+.member-details{
+  display: flex;
+  justify-content: space-between;
+  width: 30vw;
+}
