@@ -12,7 +12,7 @@ const SearchBar = ({ placeholder, handleSearchQuery }) => {
         />
       </div>
       <span className="serchIcon">
-        <i className="material-icons">search</i>
+        <i style={{cursor: 'pointer'}} className="material-icons">search</i>
       </span>
     </div>
   );

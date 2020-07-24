@@ -64,20 +64,12 @@ const ProjectPage = () => {
           <br />
           <br />
           <div className="pdf center">
-            <embed
-              src={project.pdfUrl}
-              // style={{ height: "100vh", width: "75vw" }}
-              // type="application/pdf"
-              // pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"
-              width="100%"
-              height="500"
-              alt="pdf"
-              pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"
-              background-color="0xFF525659"
-              top-toolbar-height="56"
-              full-frame=""
-              internalinstanceid="21"
-              title="CHROME"
+            <object
+              aria-label="pdf"
+              data={project.pdfUrl}
+              type="application/pdf"
+              width="95%"
+              height="700"
             />
           </div>
           <div className="pdf-container"></div>

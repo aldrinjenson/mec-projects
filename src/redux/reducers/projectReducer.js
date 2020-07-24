@@ -11,6 +11,7 @@ const INIT_STATE = {
   projects: [],
   loading: false,
   error: null,
+  uploadComplete:false
 };
 
 const projectReducer = (state = INIT_STATE, action) => {
@@ -38,19 +39,21 @@ const projectReducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
+        uploadComplete:false,
       };
     case ADD_PROJECT_SUCCESS:
       return {
         ...state,
         loading: false,
-        projects: state.projects.push(action.payload)
+        uploadComplete:true,
+        projects: [...state.projects, action.payload]
       };
     case ADD_PROJECT_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
     default:
       return state;
