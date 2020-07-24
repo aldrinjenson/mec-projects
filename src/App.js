@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import HomePage from "./pages/HomePage";
-// import M from 'materialize-css'
+import M from 'materialize-css'
 import { Switch, Route } from "react-router-dom";
 import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import Navbar from "./components/Navbar";
@@ -15,7 +15,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(fetchProjects())
-    // M.AutoInit()
+    M.updateTextFields()
   })
 
   return (
