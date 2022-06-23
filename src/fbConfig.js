@@ -2,14 +2,15 @@ import firebase from "firebase/app";
 import "firebase/storage";
 import "firebase/firestore";
 
+// will work only in the configured domain
 const firebaseConfig = {
-  apiKey: "AIzaSyBOKD7nD1FTZql9PCFGl6fi_ddSL_O3EJc",
-  authDomain: "mec-projects.firebaseapp.com",
-  databaseURL: "https://mec-projects.firebaseio.com",
-  projectId: "mec-projects",
-  storageBucket: "mec-projects.appspot.com",
-  messagingSenderId: "399057926703",
-  appId: "1:399057926703:web:da27c91e4a15c2f28ba4da",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 firebase.initializeApp(firebaseConfig);
