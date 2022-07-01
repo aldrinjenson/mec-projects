@@ -6,7 +6,7 @@ import {
   ADD_PROJECT_SUCCESS,
   ADD_PROJECT_ERROR,
 } from "../constants";
-import firebase from "firebase";
+import firebase from "firebase/app";
 import { storage } from "../../fbConfig";
 
 export const fetchProjects = () => {
